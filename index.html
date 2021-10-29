@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock Widget</title>
+    <style>
+        :root {
+            --main-white-color: white;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            background-color: var(--main-white-color);
+        }
+
+        .slate {
+            height: 250px;
+            width: 250px;
+            background-color: var(--main-white-color);
+            filter: blur(6px) contrast(20);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box {
+            height: 60%;
+            width: 60%;
+            background-color: #212121;
+            position: absolute;
+            border-radius: 20px;
+        }
+
+        .box-one {
+            transform: rotate(45deg);
+        }
+
+        .box-two {
+            transform: rotate(75deg);
+        }
+
+        .box-three {
+            transform: rotate(105deg);
+        }
+
+        .pins {
+            height: 250px;
+            width: 250px;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: rotate(180deg);
+        }
+
+        .pins span {
+            position: absolute;
+            border-radius: 10px;
+        }
+
+        #min {
+            height: 23%;
+            width: 5%;
+            background-color: #6D9886;
+            top: 50%;
+            transform-origin: 50% 0%;
+        }
+
+        #hr {
+            height: 17%;
+            width: 5%;
+            background-color: #D9CAB3;
+            top: 50%;
+            transform-origin: 50% 0%;
+        }
+
+        #sec {
+            height: 16px;
+            width: 16px;
+            background-color: #F6F6F6;
+            top: 45px;
+            border-radius: 50%;
+            transform-origin: 50% 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 11px;
+            font-weight: bold;
+            font-family: monospace;
+            color: #753422;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="slate">
+            <div class="box box-one"></div>
+            <div class="box box-two"></div>
+            <div class="box box-three"></div>
+        </div>
+        <div class="pins">
+            <span id="sec">0</span>
+            <span id="hr"></span>
+            <span id="min"></span>
+        </div>
+    </div>
+    <script>
+        window.onload = () => {
+            const secSpan = document.getElementById('sec')
+            const minSpan = document.getElementById('min')
+            const hrSpan = document.getElementById('hr')
+
+            setInterval(() => {
+                const d = new Date();
+
+                let sec = d.getSeconds() <= 30 ? d.getSeconds() + 30 : d.getSeconds() - 30
+
+                secSpan.innerText = sec
+                secSpan.style.transform = `rotate(${d.getSeconds() * 6}deg)`
+                minSpan.style.transform = `rotate(${d.getMinutes() * 6 + d.getSeconds() / 10}deg)`
+                hrSpan.style.transform = `rotate(${((d.getHours() - 12) * 30) + d.getMinutes() / 2}deg)`
+
+            }, 1000)
+        }
+    </script>
+</body>
+
+</html>
